@@ -1,0 +1,25 @@
+<resources>
+    <style name="Theme.DelfyKost" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <item name="colorPrimary">@color/navy_dark</item>
+        <item name="colorPrimaryVariant">@color/navy_medium</item>
+        <item name="colorOnPrimary">@color/text_white</item>
+        <item name="colorSecondary">@color/gold_primary</item>
+        <item name="colorOnSecondary">@color/text_white</item>
+        <item name="android:windowBackground">@color/bg_light</item>
+        <item name="android:statusBarColor">@color/navy_dark</item>
+    </style>
+    <style name="ButtonGold" parent="Widget.MaterialComponents.Button">
+        <item name="android:backgroundTint">@color/gold_primary</item>
+        <item name="android:textColor">@color/navy_dark</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">16sp</item>
+        <item name="cornerRadius">12dp</item>
+    </style>
+    <style name="ButtonNavy" parent="Widget.MaterialComponents.Button">
+        <item name="android:backgroundTint">@color/navy_dark</item>
+        <item name="android:textColor">@color/text_white</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">14sp</item>
+        <item name="cornerRadius">12dp</item>
+    </style>
+</resources>

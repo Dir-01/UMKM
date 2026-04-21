@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_card_outline_black"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:layout_margin="8dp"> <TextView
+    android:id="@+id/tvNoKamar"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="Kamar 01"
+    android:textColor="@color/colorPrimary"
+    android:textStyle="bold"
+    android:textSize="18sp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:layout_marginTop="8dp">
+        <ImageView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/ic_bed"
+            android:tint="@color/colorPrimary"/>
+        <TextView
+            android:id="@+id/tvStatusKamar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:background="@drawable/bg_badge_green"
+            android:paddingStart="8dp"
+            android:paddingEnd="8dp"
+            android:text="Terisi"
+            android:textColor="@color/text_white"
+            android:textSize="12sp"
+            android:textStyle="bold"/>
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Harga :"
+        android:textColor="@color/colorPrimary"
+        android:textStyle="bold"
+        android:layout_marginTop="12dp"/>
+
+    <TextView
+        android:id="@+id/tvHargaKamar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Rp 1.000.000"
+        android:textColor="#757575"
+        android:textSize="14sp"
+        android:layout_marginTop="4dp"/>
+</LinearLayout>

@@ -1,0 +1,65 @@
+<resources>
+    <string name="app_name">Delfy Kost</string>
+    <string name="app_tagline">Kost khusus pria</string>
+    <!--  Login  -->
+    <string name="login_pemilik">LOGIN PEMILIK</string>
+    <string name="username_email">Username/Email</string>
+    <string name="password">Password</string>
+    <string name="btn_login_pemilik">LOGIN SEBAGAI PEMILIK</string>
+    <string name="lupa_password">Lupa Password?</string>
+    <!--  Daftar  -->
+    <string name="daftar_sekarang">DAFTAR SEKARANG</string>
+    <string name="daftar_desc">Silahkan isi data diri anda untuk mendaftar sebagai penghuni baru</string>
+    <string name="nama_lengkap">Nama Lengkap</string>
+    <string name="alamat_email">Alamat Email</string>
+    <string name="nomor_whatsapp">Nomor WhatsApp</string>
+    <string name="hint_nama">Masukkan Nama Lengkap Anda</string>
+    <string name="hint_email">Masukkan Email Anda</string>
+    <string name="hint_wa">Masukkan No. WA Anda</string>
+    <string name="hint_password">Masukkan Password anda</string>
+    <string name="btn_daftar">Daftar Akun Baru</string>
+    <!--  Dashboard  -->
+    <string name="dashboard_pemilik">DASHBOARD PEMILIK</string>
+    <string name="kelola_kamar">Kelola kamar</string>
+    <string name="data_penghuni">Data Penghuni</string>
+    <string name="ringkasan_kost">Ringkasan Kost</string>
+    <string name="kamar_terisi">Kamar terisi</string>
+    <string name="komplain_masuk">Komplain masuk</string>
+    <!--  Kelola Kamar  -->
+    <string name="tambahkan_kamar_baru">Tambahkan Kamar Baru +</string>
+    <string name="status_terisi">Terisi</string>
+    <string name="status_kosong">Kosong</string>
+    <string name="status_perbaikan">Perbaikan</string>
+    <string name="penghuni">Penghuni :</string>
+    <!--  Tambah Kamar  -->
+    <string name="tambahkan_kamar_baru_title">Tambahkan\nKamar Baru</string>
+    <string name="nama_no_kamar">Nama/No.Kamar</string>
+    <string name="contoh_kamar">Contoh: Kamar 06</string>
+    <string name="pilih_status_awal">Pilih Status Awal</string>
+    <string name="simpan_kamar_baru">Simpan Kamar Baru</string>
+    <string name="kamar_berhasil_ditambahkan">Kamar Berhasil\nDitambahkan!</string>
+    <string name="kembali">Kembali</string>
+    <!--  Data Penghuni  -->
+    <string name="data_penghuni_title">Data\nPenghuni</string>
+    <string name="cari_hint">Cari nama atau nomor kamar...</string>
+    <string name="nama_penghuni">Nama Penghuni :</string>
+    <string name="no_kamar">No. Kamar :</string>
+    <string name="kontrak">Kontrak :</string>
+    <string name="kontak">Kontak :</string>
+    <!--  Komplain  -->
+    <string name="komplain_masuk_title">Komplein\nMasuk</string>
+    <string name="selesai">Selesai</string>
+    <string name="menunggu">Menunggu</string>
+    <string name="keluhan">Keluhan :</string>
+    <string name="status">Status :</string>
+    <string name="update_status">Update Status</string>
+    <string name="status_berhasil_diubah">Status Berhasil\nDiubah!</string>
+    <!--  Ringkasan  -->
+    <string name="ringkasan_kost_title">RINGKASAN KOST</string>
+    <string name="total_kamar">Total Kamar</string>
+    <string name="tersedia">Tersedia</string>
+    <string name="tagihan_menunggak">Tagihan Menunggak</string>
+    <string name="daftar_penyewa_aktif">DAFTAR PENYEWA AKTIF</string>
+    <string name="pembayaran_terbaru">PEMBAYARAN TERBARU</string>
+    <string name="halo">Halo,</string>
+</resources>

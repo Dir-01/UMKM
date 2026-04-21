@@ -1,0 +1,25 @@
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginBottom="12dp" app:cardCornerRadius="14dp" app:cardElevation="2dp" app:cardBackgroundColor="@color/bg_white">
+    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal" android:padding="14dp" android:gravity="center_vertical">
+        <!--  Profile Photo  -->
+        <ImageView android:id="@+id/ivProfile" android:layout_width="56dp" android:layout_height="56dp" android:src="@drawable/ic_profile_placeholder" android:background="@drawable/circle_profile" android:scaleType="centerCrop" android:padding="4dp"/>
+        <!--  Info  -->
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:layout_marginStart="14dp">
+            <LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content" android:orientation="horizontal">
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Nama Penghuni : " android:textColor="@color/text_dark" android:textSize="13sp" android:textStyle="bold"/>
+                <TextView android:id="@+id/tvNamaPenghuni" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textColor="@color/text_medium" android:textSize="13sp"/>
+            </LinearLayout>
+            <LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content" android:orientation="horizontal">
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="No. Kamar : " android:textColor="@color/text_dark" android:textSize="13sp" android:textStyle="bold"/>
+                <TextView android:id="@+id/tvNoKamar" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textColor="@color/text_medium" android:textSize="13sp"/>
+            </LinearLayout>
+            <LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content" android:orientation="horizontal">
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Kontrak : " android:textColor="@color/text_dark" android:textSize="13sp" android:textStyle="bold"/>
+                <TextView android:id="@+id/tvKontrak" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textColor="@color/text_medium" android:textSize="13sp"/>
+            </LinearLayout>
+            <LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content" android:orientation="horizontal">
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Kontak : " android:textColor="@color/text_dark" android:textSize="13sp" android:textStyle="bold"/>
+                <TextView android:id="@+id/tvKontak" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textColor="@color/text_medium" android:textSize="13sp"/>
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+</androidx.cardview.widget.CardView>

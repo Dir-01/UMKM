@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.delfy.kost">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <application
+        android:allowBackup="true"
+        android:dataExtractionRules="@xml/data_extraction_rules"
+        android:fullBackupContent="@xml/backup_rules"
+        android:icon="@mipmap/logo_delfykost"
+        android:label="Delfy Kost"
+        android:roundIcon="@mipmap/logo_delfykost_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.DelfyKost"
+        android:usesCleartextTraffic="true"
+        tools:targetApi="31">
+        <activity
+            android:name=".LoginActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <activity android:name=".LoginPenyewaActivity" />
+        <activity android:name=".DaftarActivity" />
+        <activity android:name=".HomepageActivity" />
+        <activity android:name=".ProfileUserActivity" />
+        <activity android:name=".KamarSewaActivity" />
+        <activity android:name=".KamarTipe1Activity" />
+        <activity android:name=".KamarTipe2Activity" />
+        <activity android:name=".PemesananActivity" />
+        <activity android:name=".PemesananTipe2Activity" />
+        <activity android:name=".MetodePembayaranActivity" />
+        <activity android:name=".PembayaranTransferActivity" />
+        <activity android:name=".PembayaranEwalletActivity" />
+        <activity android:name=".RiwayatPembayaranActivity" />
+        <activity android:name=".KomplainActivity" />
+        <activity android:name=".KomplainBerhasilActivity" />
+
+        <activity android:name=".LoginPemilikActivity" />
+        <activity android:name=".DashboardPemilikActivity" />
+        <activity android:name=".KelolaKamarActivity" />
+        <activity android:name=".TambahKamarActivity" />
+        <activity android:name=".TambahKamarBerhasilActivity" />
+        <activity android:name=".DataPenghuniActivity" />
+        <activity android:name=".KomplainMasukActivity" />
+        <activity android:name=".UpdateStatusActivity" />
+        <activity android:name=".UpdateStatusBerhasilActivity" />
+        <activity android:name=".RingkasanKostActivity" />
+
+    </application>
+
+</manifest>
