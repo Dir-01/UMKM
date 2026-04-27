@@ -1,4 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/bg_screen"
@@ -10,22 +12,34 @@
         android:orientation="vertical"
         android:paddingBottom="32dp">
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="100dp"
             android:background="@drawable/bg_header_bottom_rounded"
-            android:gravity="center"
-            android:orientation="horizontal">
+            android:paddingStart="24dp"
+            android:paddingEnd="24dp">
+
+            <ImageView
+                android:id="@+id/btn_back_pemesanan"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_centerVertical="true"
+                android:layout_alignParentStart="true"
+                android:src="@drawable/ic_arrow_back"
+                android:clickable="true"
+                android:focusable="true"
+                app:tint="#FFFFFF"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
                 android:fontFamily="serif"
                 android:text="PEMESANAN"
-                android:textColor="@color/text_white"
+                android:textColor="#FFFFFF"
                 android:textSize="22sp"
                 android:textStyle="bold" />
-        </LinearLayout>
+        </RelativeLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -45,16 +59,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:layout_marginTop="8dp"
-                android:weightSum="5">
+                android:layout_marginTop="8dp">
 
                 <TextView
-                    android:id="@+id/chip_1"
-                    android:layout_width="0dp"
+                    android:id="@+id/tv_durasi_1"
+                    android:layout_width="45dp"
                     android:layout_height="40dp"
-                    android:layout_weight="1"
-                    android:layout_marginEnd="8dp"
-                    android:background="@drawable/bg_chip_gold"
+                    android:background="@drawable/bg_durasi_selected"
                     android:gravity="center"
                     android:text="1"
                     android:textColor="@color/text_dark"
@@ -64,12 +75,11 @@
                     android:focusable="true"/>
 
                 <TextView
-                    android:id="@+id/chip_3"
-                    android:layout_width="0dp"
+                    android:id="@+id/tv_durasi_3"
+                    android:layout_width="45dp"
                     android:layout_height="40dp"
-                    android:layout_weight="1"
-                    android:layout_marginEnd="8dp"
-                    android:background="@drawable/bg_chip_gold"
+                    android:layout_marginStart="12dp"
+                    android:background="@drawable/bg_durasi_unselected"
                     android:gravity="center"
                     android:text="3"
                     android:textColor="@color/text_dark"
@@ -79,12 +89,11 @@
                     android:focusable="true"/>
 
                 <TextView
-                    android:id="@+id/chip_6"
-                    android:layout_width="0dp"
+                    android:id="@+id/tv_durasi_6"
+                    android:layout_width="45dp"
                     android:layout_height="40dp"
-                    android:layout_weight="1"
-                    android:layout_marginEnd="8dp"
-                    android:background="@drawable/bg_chip_gold"
+                    android:layout_marginStart="12dp"
+                    android:background="@drawable/bg_durasi_unselected"
                     android:gravity="center"
                     android:text="6"
                     android:textColor="@color/text_dark"
@@ -94,12 +103,11 @@
                     android:focusable="true"/>
 
                 <TextView
-                    android:id="@+id/chip_12"
-                    android:layout_width="0dp"
+                    android:id="@+id/tv_durasi_12"
+                    android:layout_width="45dp"
                     android:layout_height="40dp"
-                    android:layout_weight="1"
-                    android:layout_marginEnd="8dp"
-                    android:background="@drawable/bg_chip_gold"
+                    android:layout_marginStart="12dp"
+                    android:background="@drawable/bg_durasi_unselected"
                     android:gravity="center"
                     android:text="12"
                     android:textColor="@color/text_dark"
@@ -109,11 +117,13 @@
                     android:focusable="true"/>
 
                 <TextView
-                    android:layout_width="0dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="40dp"
-                    android:layout_weight="1.2"
-                    android:background="@drawable/bg_chip_gold"
+                    android:layout_marginStart="12dp"
+                    android:background="@drawable/bg_durasi_selected"
                     android:gravity="center"
+                    android:paddingStart="16dp"
+                    android:paddingEnd="16dp"
                     android:text="Bulan"
                     android:textColor="@color/text_dark"
                     android:textStyle="bold"
@@ -129,20 +139,20 @@
                 android:fontFamily="serif"
                 android:textSize="16sp" />
 
-            <TextView
-                android:id="@+id/tv_tanggal_mulai"
+            <EditText
+                android:id="@+id/et_tanggal_mulai"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_marginTop="8dp"
-                android:background="@color/btn_gold"
-                android:gravity="center_vertical"
+                android:background="@drawable/bg_durasi_selected"
+                android:hint="Contoh: 01-05-2026"
+                android:inputType="date"
                 android:paddingStart="16dp"
                 android:paddingEnd="16dp"
                 android:textColor="@color/text_dark"
+                android:textColorHint="#8A6B32"
                 android:fontFamily="serif"
-                android:textSize="16sp"
-                android:clickable="true"
-                android:focusable="true"/>
+                android:textSize="16sp" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -168,8 +178,6 @@
                 android:layout_height="1dp"
                 android:layout_marginTop="24dp"
                 android:layout_marginBottom="24dp"
-                android:layout_marginStart="16dp"
-                android:layout_marginEnd="16dp"
                 android:background="@color/text_dark" />
 
             <TextView
@@ -182,7 +190,7 @@
                 android:layout_marginBottom="16dp"/>
 
             <LinearLayout
-                android:id="@+id/btn_bank_transfer"
+                android:id="@+id/opsi_bank_transfer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
@@ -207,14 +215,52 @@
                     android:textSize="16sp" />
 
                 <ImageView
+                    android:id="@+id/ic_arrow_bank"
                     android:layout_width="24dp"
                     android:layout_height="24dp"
                     android:src="@drawable/ic_arrow_right"
-                    android:tint="@color/text_dark"/>
+                    app:tint="@color/text_dark"/>
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/btn_ewallet"
+                android:id="@+id/layout_detail_bank"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="@drawable/bg_card_outline"
+                android:padding="16dp"
+                android:layout_marginBottom="16dp"
+                android:visibility="gone">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Silakan transfer ke rekening berikut:"
+                    android:fontFamily="serif"
+                    android:textColor="@color/text_dark"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="BCA - 1234567890"
+                    android:fontFamily="serif"
+                    android:textColor="@color/text_dark"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="a.n Delfy Kost"
+                    android:fontFamily="serif"
+                    android:textColor="@color/text_dark"
+                    android:textSize="16sp" />
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:id="@+id/opsi_ewallet"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
@@ -239,14 +285,53 @@
                     android:textSize="16sp" />
 
                 <ImageView
+                    android:id="@+id/ic_arrow_ewallet"
                     android:layout_width="24dp"
                     android:layout_height="24dp"
                     android:src="@drawable/ic_arrow_right"
-                    android:tint="@color/text_dark"/>
+                    app:tint="@color/text_dark"/>
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/btn_lanjutkan"
+                android:id="@+id/layout_detail_ewallet"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="@drawable/bg_card_outline"
+                android:padding="16dp"
+                android:layout_marginBottom="16dp"
+                android:visibility="gone">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Silakan transfer ke nomor berikut:"
+                    android:fontFamily="serif"
+                    android:textColor="@color/text_dark"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="GoPay / OVO / DANA"
+                    android:fontFamily="serif"
+                    android:textColor="@color/text_dark"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0812-3456-7890"
+                    android:fontFamily="serif"
+                    android:textColor="@color/text_dark"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:id="@+id/btn_lanjutkan_pemesanan"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/bg_btn_pemilik"

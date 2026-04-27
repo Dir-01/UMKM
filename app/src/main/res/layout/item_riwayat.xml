@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="24dp"
+    android:layout_marginVertical="8dp"
+    app:cardBackgroundColor="#F8F3E9"
+    app:cardCornerRadius="12dp"
+    app:cardElevation="2dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp"
+        android:background="@drawable/bg_card_outline"> <TextView
+        android:id="@+id/tv_item_judul"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Sewa Kamar 01"
+        android:textColor="@color/text_dark"
+        android:textSize="18sp"
+        android:fontFamily="serif" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginVertical="8dp"
+            android:background="#333333" />
+
+        <TextView
+            android:id="@+id/tv_item_tanggal_harga"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="20 Jan 2026 - Rp 700.000"
+            android:textColor="@color/text_dark"
+            android:textSize="16sp"
+            android:fontFamily="serif" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="4dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Status: "
+                android:textColor="@color/text_dark"
+                android:fontFamily="serif"/>
+            <TextView
+                android:id="@+id/tv_item_status"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="LUNAS"
+                android:textColor="#2ECC71"
+                android:textStyle="bold"
+                android:fontFamily="serif"/>
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginVertical="8dp"
+            android:background="#333333" />
+
+        <TextView
+            android:id="@+id/tv_item_metode"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Metode Pembayaran: TRANSFER"
+            android:textColor="@color/text_dark"
+            android:fontFamily="serif" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:text="Bukti Transfer:"
+            android:textSize="12sp"
+            android:textColor="#666666" />
+
+        <ImageView
+            android:id="@+id/iv_item_bukti"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:layout_marginTop="4dp"
+            android:scaleType="centerCrop"
+            android:background="#DDDDDD" />
+
+    </LinearLayout>
+</androidx.cardview.widget.CardView>

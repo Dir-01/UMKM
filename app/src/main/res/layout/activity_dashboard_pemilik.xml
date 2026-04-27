@@ -46,7 +46,6 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:padding="24dp"
-            android:baselineAligned="false"
             android:weightSum="2">
 
             <LinearLayout
@@ -93,7 +92,6 @@
                     android:clickable="true"
                     android:focusable="true"
                     android:layout_marginBottom="16dp">
-
                     <ImageView
                         android:layout_width="64dp"
                         android:layout_height="64dp"
@@ -119,7 +117,6 @@
                     android:orientation="vertical"
                     android:clickable="true"
                     android:focusable="true">
-
                     <ImageView
                         android:layout_width="64dp"
                         android:layout_height="64dp"
@@ -146,7 +143,7 @@
                 android:layout_marginStart="8dp">
 
                 <LinearLayout
-                    android:id="@+id/card_kamar_terisi"
+                    android:id="@+id/card_pesanan"
                     android:layout_width="match_parent"
                     android:layout_height="220dp"
                     android:background="@drawable/bg_dash_card_blue"
@@ -155,7 +152,6 @@
                     android:clickable="true"
                     android:focusable="true"
                     android:layout_marginBottom="16dp">
-
                     <ImageView
                         android:layout_width="80dp"
                         android:layout_height="80dp"
@@ -166,7 +162,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="16dp"
                         android:fontFamily="serif"
-                        android:text="Kamar\nterisi"
+                        android:text="Pesanan"
                         android:textAlignment="center"
                         android:textColor="@color/btn_gold"
                         android:textSize="20sp"
@@ -176,10 +172,10 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
                         android:fontFamily="serif"
-                        android:text="5/5\nTerisi"
+                        android:text="Lihat Daftar"
                         android:textAlignment="center"
                         android:textColor="@color/btn_gold"
-                        android:textSize="16sp" />
+                        android:textSize="14sp" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -191,7 +187,6 @@
                     android:orientation="vertical"
                     android:clickable="true"
                     android:focusable="true">
-
                     <ImageView
                         android:layout_width="80dp"
                         android:layout_height="80dp"
@@ -209,7 +204,6 @@
                         android:textStyle="bold" />
                 </LinearLayout>
             </LinearLayout>
-
         </LinearLayout>
     </LinearLayout>
 </ScrollView>

@@ -9,7 +9,6 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-// Import untuk API
 import com.delfy.kost.api.ApiClient;
 import com.delfy.kost.api.ApiService;
 import com.delfy.kost.api.KamarResponse;
@@ -21,49 +20,49 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class DashboardPemilikActivity extends AppCompatActivity {
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard_pemilik);
 
+        // 1. Inisialisasi View
         ImageView btnBack = findViewById(R.id.btn_back);
         LinearLayout cardKelola = findViewById(R.id.card_kelola_kamar);
         LinearLayout cardPenghuni = findViewById(R.id.card_data_penghuni);
         LinearLayout cardRingkasan = findViewById(R.id.card_ringkasan_kost);
         LinearLayout cardKomplain = findViewById(R.id.card_komplain_masuk);
+        LinearLayout cardPesanan = findViewById(R.id.card_pesanan); // ID Baru dari XML
 
-        // --- 1. FITUR LOGOUT (Hapus Token) ---
+        // 2. FITUR LOGOUT
         btnBack.setOnClickListener(v -> {
             SharedPreferences sharedPreferences = getSharedPreferences("USER_DATA", MODE_PRIVATE);
-
-            // PERBAIKAN 1: Tambahkan baris pemanggilan 'editor' ini agar tidak Error
             SharedPreferences.Editor editor = sharedPreferences.edit();
             editor.clear();
             editor.apply();
 
             Toast.makeText(DashboardPemilikActivity.this, "Berhasil Logout", Toast.LENGTH_SHORT).show();
-
-            // Ubah arah logout agar kembali ke Login Pemilik
             startActivity(new Intent(this, LoginPemilikActivity.class));
             finish();
         });
 
-        // --- 2. MENU NAVIGASI ---
+        // 3. MENU NAVIGASI
         cardKelola.setOnClickListener(v -> startActivity(new Intent(this, KelolaKamarActivity.class)));
         cardPenghuni.setOnClickListener(v -> startActivity(new Intent(this, DataPenghuniActivity.class)));
         cardRingkasan.setOnClickListener(v -> startActivity(new Intent(this, RingkasanKostActivity.class)));
         cardKomplain.setOnClickListener(v -> startActivity(new Intent(this, KomplainMasukActivity.class)));
 
-        // --- 3. TEST AMBIL DATA DARI LARAVEL ---
+        // Klik ke Halaman Pesanan
+        cardPesanan.setOnClickListener(v -> startActivity(new Intent(this, PesananActivity.class)));
+
+        // 4. TEST AMBIL DATA
         testAmbilDataKamar();
     }
 
     private void testAmbilDataKamar() {
-        // PERBAIKAN 2: Ganti "KostPrefs" jadi "USER_DATA" dan "TOKEN" jadi "token"
         SharedPreferences sharedPreferences = getSharedPreferences("USER_DATA", MODE_PRIVATE);
         String token = sharedPreferences.getString("token", null);
 
-        // Jika token tidak ada (misal di-clear atau belum login)
         if (token == null) {
             Toast.makeText(this, "Sesi habis, silakan login ulang!", Toast.LENGTH_SHORT).show();
             startActivity(new Intent(this, LoginPemilikActivity.class));
@@ -71,29 +70,25 @@ public class DashboardPemilikActivity extends AppCompatActivity {
             return;
         }
 
-        // Siapkan alat penembak API
         ApiService apiService = ApiClient.getClient();
         String tokenBearer = "Bearer " + token;
 
-        // Tembak API kamar
         apiService.getKamar(tokenBearer).enqueue(new Callback<KamarResponse>() {
             @Override
             public void onResponse(Call<KamarResponse> call, Response<KamarResponse> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     List<KamarResponse.KamarModel> daftarKamar = response.body().getData();
-
-                    // Tampilkan jumlah kamar yang berhasil ditarik dari database Laravel
-                    int totalKamar = daftarKamar.size();
-                    Toast.makeText(DashboardPemilikActivity.this, "Sukses terhubung! Ada " + totalKamar + " kamar di database.", Toast.LENGTH_LONG).show();
+                    int totalKamar = (daftarKamar != null) ? daftarKamar.size() : 0;
+                    Toast.makeText(DashboardPemilikActivity.this, "Sukses terhubung! Ada " + totalKamar + " kamar.", Toast.LENGTH_LONG).show();
                 } else {
-                    Toast.makeText(DashboardPemilikActivity.this, "Gagal mengambil data dari server", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(DashboardPemilikActivity.this, "Gagal ambil data", Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(Call<KamarResponse> call, Throwable t) {
-                Toast.makeText(DashboardPemilikActivity.this, "Koneksi Error: Pastikan Laravel menyala!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(DashboardPemilikActivity.this, "Koneksi Error!", Toast.LENGTH_SHORT).show();
             }
-        });
+        }); // Pastikan ada tanda ); di sini
     }
 }

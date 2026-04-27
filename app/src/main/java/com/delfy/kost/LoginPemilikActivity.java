@@ -4,11 +4,11 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Paint;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.util.Log; // Tambahan untuk Log
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -16,6 +16,8 @@ import com.delfy.kost.api.ApiClient;
 import com.delfy.kost.api.ApiService;
 import com.delfy.kost.api.LoginRequest;
 import com.delfy.kost.api.LoginResponse;
+
+import org.json.JSONObject;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -43,7 +45,7 @@ public class LoginPemilikActivity extends AppCompatActivity {
             String password = etPassword.getText().toString().trim();
 
             if (username.isEmpty() || password.isEmpty()) {
-                Toast.makeText(LoginPemilikActivity.this, "Username dan Password tidak boleh kosong!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Isi username dan password!", Toast.LENGTH_SHORT).show();
             } else {
                 prosesLogin(username, password);
             }
@@ -51,49 +53,46 @@ public class LoginPemilikActivity extends AppCompatActivity {
     }
 
     private void prosesLogin(String username, String password) {
-        Toast.makeText(this, "Mencoba masuk...", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Menghubungkan ke server...", Toast.LENGTH_SHORT).show();
 
         ApiService apiService = ApiClient.getClient();
+        // Sekarang mengirim 'username', bukan 'email'
         LoginRequest request = new LoginRequest(username, password);
 
         apiService.loginPemilik(request).enqueue(new Callback<LoginResponse>() {
             @Override
             public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
                 if (response.isSuccessful() && response.body() != null) {
-                    LoginResponse loginResponse = response.body();
+                    if (response.body().isSuccess()) {
+                        // Simpan Token
+                        String token = response.body().getData().getAccessToken();
+                        SharedPreferences pref = getSharedPreferences("USER_DATA", MODE_PRIVATE);
+                        pref.edit().putString("token", token).apply();
 
-                    // --- BAGIAN INI YANG TADI TERPOTONG ---
-                    if (loginResponse.isSuccess()) {
-
-                        // Ambil token dari JSON response
-                        String token = loginResponse.getData().getAccessToken();
-
-                        // Pasang CCTV Logcat
-                        Log.d("CCTV_LOGIN", "Token Berhasil Didapat: " + token);
-
-                        // Simpan ke SharedPreferences
-                        SharedPreferences sharedPreferences = getSharedPreferences("USER_DATA", MODE_PRIVATE);
-                        SharedPreferences.Editor editor = sharedPreferences.edit();
-                        editor.putString("token", token);
-                        editor.apply();
-
-                        Toast.makeText(LoginPemilikActivity.this, "Login Berhasil!", Toast.LENGTH_SHORT).show();
-
-                        // Pindah halaman
+                        Toast.makeText(LoginPemilikActivity.this, "Selamat Datang, Pemilik!", Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(LoginPemilikActivity.this, DashboardPemilikActivity.class));
                         finish();
-
                     } else {
-                        Toast.makeText(LoginPemilikActivity.this, "Gagal: " + loginResponse.getMessage(), Toast.LENGTH_LONG).show();
+                        Toast.makeText(LoginPemilikActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 } else {
-                    Toast.makeText(LoginPemilikActivity.this, "Username atau Password salah!", Toast.LENGTH_SHORT).show();
+                    // Menangkap pesan error asli dari Laravel (Validator)
+                    try {
+                        String errorBody = response.errorBody().string();
+                        JSONObject jsonObject = new JSONObject(errorBody);
+                        String pesan = jsonObject.optString("message", "Username/Password Salah");
+                        Toast.makeText(LoginPemilikActivity.this, pesan, Toast.LENGTH_LONG).show();
+                        Log.e("Delfy_Debug", "Error 422: " + errorBody);
+                    } catch (Exception e) {
+                        Toast.makeText(LoginPemilikActivity.this, "Gagal Login (Error " + response.code() + ")", Toast.LENGTH_SHORT).show();
+                    }
                 }
             }
 
             @Override
             public void onFailure(Call<LoginResponse> call, Throwable t) {
-                Toast.makeText(LoginPemilikActivity.this, "Koneksi Gagal! Pastikan server menyala.", Toast.LENGTH_LONG).show();
+                Log.e("Delfy_Debug", "Failure: " + t.getMessage());
+                Toast.makeText(LoginPemilikActivity.this, "Cek koneksi internet/IP Server!", Toast.LENGTH_LONG).show();
             }
         });
     }

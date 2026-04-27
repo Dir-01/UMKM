@@ -1,38 +1,49 @@
 package com.delfy.kost;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.widget.LinearLayout;
+import android.widget.TextView;
+import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class ProfileUserActivity extends AppCompatActivity {
+
+    private TextView tvNamaUser; // Tambahkan variabel TextView
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile_user);
 
-        // PERBAIKAN: navHome sekarang menggunakan LinearLayout, sesuai dengan yang ada di XML
+        // 1. Hubungkan ID
+        tvNamaUser = findViewById(R.id.tv_nama_user); // Pastikan di XML ID-nya ini
         LinearLayout navHome = findViewById(R.id.nav_home);
-        LinearLayout menuKamar = findViewById(R.id.menu_kamar_sewa);
         LinearLayout menuRiwayat = findViewById(R.id.menu_riwayat);
-        LinearLayout menuKomplain = findViewById(R.id.menu_komplain);
         LinearLayout btnLogout = findViewById(R.id.btn_logout);
 
-        // Aksi Tombol Home di Navigasi Bawah
+        // 2. AMBIL NAMA DARI BRANKAS
+        SharedPreferences pref = getSharedPreferences("USER_DATA", MODE_PRIVATE);
+        String namaLogin = pref.getString("nama", "Penyewa Kost");
+        tvNamaUser.setText(namaLogin); // <--- Nama otomatis ganti sesuai akun
+
+        // 3. Aksi Navigasi
         navHome.setOnClickListener(v -> {
             startActivity(new Intent(this, HomepageActivity.class));
             finish();
         });
 
-        // Aksi Menu Profil
-        menuKamar.setOnClickListener(v -> startActivity(new Intent(this, KamarSewaActivity.class)));
         menuRiwayat.setOnClickListener(v -> startActivity(new Intent(this, RiwayatPembayaranActivity.class)));
-        menuKomplain.setOnClickListener(v -> startActivity(new Intent(this, KomplainActivity.class)));
 
-        // Aksi Tombol Log Out
+        // 4. Aksi Log Out
         btnLogout.setOnClickListener(v -> {
-            Intent intent = new Intent(this, LoginActivity.class);
-            // Hapus tumpukan layar agar pengguna tidak bisa menekan tombol "Back" ke profil setelah logout
+            SharedPreferences.Editor editor = pref.edit();
+            editor.clear(); // Hapus data login
+            editor.apply();
+
+            Toast.makeText(this, "Berhasil Keluar", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(this, LoginPenyewaActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intent);
         });

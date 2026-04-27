@@ -1,5 +1,6 @@
 package com.delfy.kost;
 
+import android.util.Log;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.widget.ArrayAdapter;
@@ -69,9 +70,14 @@ public class TambahKamarActivity extends AppCompatActivity {
     private void prosesSimpanKamar(String noKamar, int harga, String status) {
         Toast.makeText(this, "Sedang menyimpan...", Toast.LENGTH_SHORT).show();
 
-        // --- PASTIKAN MENCARI DI BRANKAS YANG SAMA ---
         SharedPreferences sharedPreferences = getSharedPreferences("USER_DATA", MODE_PRIVATE);
         String token = sharedPreferences.getString("token", null);
+
+        // ==========================================================
+        // INI DIA OBATNYA: Kita deklarasikan dulu variabel idPemilik
+        // Mengambil dari SharedPreferences, atau pakai "PM-001" sebagai cadangan
+        // ==========================================================
+        String idPemilik = sharedPreferences.getString("id_pemilik", "PM001");
 
         if (token == null) {
             Toast.makeText(this, "Sesi habis, silakan login ulang", Toast.LENGTH_SHORT).show();
@@ -81,31 +87,32 @@ public class TambahKamarActivity extends AppCompatActivity {
         ApiService apiService = ApiClient.getClient();
         String tokenBearer = "Bearer " + token;
 
-// ... (lanjutkan proses simpan seperti biasa) ...
+        // Sekarang Java sudah tahu idPemilik itu isinya apa, jadi tidak akan error lagi!
+        KamarRequest requestData = new KamarRequest(noKamar, harga, status, idPemilik);
 
-        // Bungkus data ke dalam Request
-        KamarRequest requestData = new KamarRequest(noKamar, harga, status);
-
-        // Tembak URL /api/kamar
         apiService.tambahKamar(tokenBearer, requestData).enqueue(new Callback<KamarResponse>() {
             @Override
             public void onResponse(Call<KamarResponse> call, Response<KamarResponse> response) {
                 if (response.isSuccessful()) {
                     Toast.makeText(TambahKamarActivity.this, "Kamar Berhasil Ditambahkan!", Toast.LENGTH_LONG).show();
-                    // Jika sukses, tutup halaman ini otomatis agar kembali ke daftar kamar
                     finish();
                 } else {
-                    Toast.makeText(TambahKamarActivity.this, "Gagal menambahkan kamar", Toast.LENGTH_SHORT).show();
+                    try {
+                        String errorBody = response.errorBody().string();
+                        Log.e("Delfy_Debug", "Error Server Tambah Kamar: " + errorBody);
+                        org.json.JSONObject jsonObject = new org.json.JSONObject(errorBody);
+                        String pesanError = jsonObject.optString("message", "Data tidak sesuai!");
+                        Toast.makeText(TambahKamarActivity.this, "Gagal: " + pesanError, Toast.LENGTH_LONG).show();
+                    } catch (Exception e) {
+                        Toast.makeText(TambahKamarActivity.this, "Error: " + response.code(), Toast.LENGTH_SHORT).show();
+                    }
                 }
             }
 
             @Override
             public void onFailure(Call<KamarResponse> call, Throwable t) {
-                // 1. Tampilkan di Logcat dengan warna merah
-                android.util.Log.e("ERROR_ASLI_API", "Penyebab: " + t.getMessage());
-
-                // 2. Tampilkan di Layar HP (Toast) agar kamu bisa langsung baca
-                Toast.makeText(TambahKamarActivity.this, "Error Asli: " + t.getMessage(), Toast.LENGTH_LONG).show();
+                Log.e("Delfy_Debug", "Koneksi Error: " + t.getMessage());
+                Toast.makeText(TambahKamarActivity.this, "Koneksi Error! Cek Server.", Toast.LENGTH_LONG).show();
             }
         });
     }
