@@ -1,7 +1,6 @@
 package com.delfy.kost;
 
 import android.content.Intent;
-
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
@@ -29,17 +28,27 @@ public class PemesananTipe2Activity extends AppCompatActivity {
     private LinearLayout layoutDetailBank, layoutDetailEwallet;
     private ImageView icArrowBank, icArrowEwallet;
 
-    // Deklarasi Variabel Data (Harga Tipe 2: 800.000)
+    // Deklarasi Variabel Data
     private int durasiBulan = 1;
     private int hargaKamarPerBulan = 800000;
     private String metodePembayaran = "";
+
+    // Variabel untuk menampung ID Kamar dari halaman sebelumnya
+    private String idKamarDinamis = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pemesanan_tipe2);
 
-        // 1. Hubungkan ID
+        // 1. Tangkap ID Kamar yang dikirim dari KamarTipe2Activity
+        // Jika tidak ada ID yang dikirim, otomatis diisi string kosong
+        idKamarDinamis = getIntent().getStringExtra("ID_KAMAR");
+        if (idKamarDinamis == null) {
+            idKamarDinamis = "";
+        }
+
+        // 2. Hubungkan ID UI
         tvDurasi1 = findViewById(R.id.tv_durasi_1);
         tvDurasi3 = findViewById(R.id.tv_durasi_3);
         tvDurasi6 = findViewById(R.id.tv_durasi_6);
@@ -49,7 +58,6 @@ public class PemesananTipe2Activity extends AppCompatActivity {
         btnLanjutkan = findViewById(R.id.btn_lanjutkan_pemesanan);
         btnBack = findViewById(R.id.btn_back_pemesanan);
 
-        // Hubungkan ID Pembayaran
         opsiBank = findViewById(R.id.opsi_bank_transfer);
         opsiEwallet = findViewById(R.id.opsi_ewallet);
         layoutDetailBank = findViewById(R.id.layout_detail_bank);
@@ -57,44 +65,36 @@ public class PemesananTipe2Activity extends AppCompatActivity {
         icArrowBank = findViewById(R.id.ic_arrow_bank);
         icArrowEwallet = findViewById(R.id.ic_arrow_ewallet);
 
-        // Set harga awal saat aplikasi dibuka
+        // Set harga awal
         updateTotalHarga();
 
-        // 2. Aksi Tombol Kembali
+        // 3. Aksi Tombol Kembali
         btnBack.setOnClickListener(v -> finish());
 
-        // 3. Aksi Pilihan Durasi
+        // 4. Aksi Pilihan Durasi
         tvDurasi1.setOnClickListener(v -> pilihDurasi(1));
         tvDurasi3.setOnClickListener(v -> pilihDurasi(3));
         tvDurasi6.setOnClickListener(v -> pilihDurasi(6));
         tvDurasi12.setOnClickListener(v -> pilihDurasi(12));
 
-        // 4. Aksi Pilih Metode Pembayaran
+        // 5. Aksi Pilih Metode Pembayaran
         opsiBank.setOnClickListener(v -> {
             metodePembayaran = "Bank Transfer";
-
-            // Tampilkan Bank, Sembunyikan Ewallet
             layoutDetailBank.setVisibility(View.VISIBLE);
             layoutDetailEwallet.setVisibility(View.GONE);
-
-            // Putar icon panah ke bawah (90 derajat)
             icArrowBank.setRotation(90);
             icArrowEwallet.setRotation(0);
         });
 
         opsiEwallet.setOnClickListener(v -> {
             metodePembayaran = "E-Wallet";
-
-            // Tampilkan Ewallet, Sembunyikan Bank
             layoutDetailEwallet.setVisibility(View.VISIBLE);
             layoutDetailBank.setVisibility(View.GONE);
-
-            // Putar icon panah ke bawah (90 derajat)
             icArrowEwallet.setRotation(90);
             icArrowBank.setRotation(0);
         });
 
-        // 5. Aksi Tombol Lanjutkan Pemesanan
+        // 6. Aksi Tombol Lanjutkan Pemesanan
         btnLanjutkan.setOnClickListener(v -> {
             String tanggalMulai = etTanggalMulai.getText().toString().trim();
 
@@ -102,14 +102,22 @@ public class PemesananTipe2Activity extends AppCompatActivity {
                 Toast.makeText(this, "Tanggal Mulai harus diisi!", Toast.LENGTH_SHORT).show();
             } else if (metodePembayaran.isEmpty()) {
                 Toast.makeText(this, "Pilih metode pembayaran terlebih dahulu!", Toast.LENGTH_SHORT).show();
+            } else if (idKamarDinamis.isEmpty()) {
+                // Cegah lanjut jika ID Kamar belum ditangkap dengan benar
+                Toast.makeText(this, "Error: ID Kamar tidak ditemukan dari halaman sebelumnya!", Toast.LENGTH_LONG).show();
             } else {
                 int totalBayar = hargaKamarPerBulan * durasiBulan;
 
-                // ARAHKAN KE HALAMAN PEMBAYARAN DAN BAWA DATANYA
                 Intent intent = new Intent(this, PembayaranActivity.class);
                 intent.putExtra("TOTAL_BAYAR", totalBayar);
                 intent.putExtra("DURASI", durasiBulan);
                 intent.putExtra("TANGGAL_MULAI", tanggalMulai);
+
+                // MENGGUNAKAN VARIABEL DINAMIS, BUKAN HARDCODE "16"
+                intent.putExtra("ID_KAMAR", idKamarDinamis);
+                intent.putExtra("TIPE_KAMAR", "Tipe 2");
+                intent.putExtra("METODE_PEMBAYARAN", metodePembayaran);
+
                 startActivity(intent);
             }
         });
@@ -117,14 +125,11 @@ public class PemesananTipe2Activity extends AppCompatActivity {
 
     private void pilihDurasi(int bulan) {
         durasiBulan = bulan;
-
-        // Reset semua
         tvDurasi1.setBackgroundResource(R.drawable.bg_durasi_unselected);
         tvDurasi3.setBackgroundResource(R.drawable.bg_durasi_unselected);
         tvDurasi6.setBackgroundResource(R.drawable.bg_durasi_unselected);
         tvDurasi12.setBackgroundResource(R.drawable.bg_durasi_unselected);
 
-        // Set selected
         if (bulan == 1) tvDurasi1.setBackgroundResource(R.drawable.bg_durasi_selected);
         if (bulan == 3) tvDurasi3.setBackgroundResource(R.drawable.bg_durasi_selected);
         if (bulan == 6) tvDurasi6.setBackgroundResource(R.drawable.bg_durasi_selected);

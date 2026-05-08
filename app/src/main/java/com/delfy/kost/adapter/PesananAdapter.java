@@ -43,6 +43,10 @@ public class PesananAdapter extends RecyclerView.Adapter<PesananAdapter.ViewHold
             intent.putExtra("METODE", data.getMetodePembayaran());
             intent.putExtra("TOTAL", String.valueOf(data.getTotalHarga()));
             intent.putExtra("BUKTI", data.getBuktiBayar());
+            if (data.getPenyewa() != null) {
+                intent.putExtra("NAMA", data.getPenyewa().getNama());
+                intent.putExtra("NO_HP", data.getPenyewa().getNoHp());
+            }
             context.startActivity(intent);
         });
     }

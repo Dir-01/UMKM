@@ -33,10 +33,19 @@ public class PemesananActivity extends AppCompatActivity {
     private int hargaKamarPerBulan = 700000;
     private String metodePembayaran = "";
 
+    // 👇 TAMBAHAN: Variabel untuk menampung ID Kamar dari halaman sebelumnya 👇
+    private String idKamarDinamis = "";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pemesanan);
+
+        // 👇 TAMBAHAN: Tangkap ID Kamar yang dikirim dari KamarTipe1Activity 👇
+        idKamarDinamis = getIntent().getStringExtra("ID_KAMAR");
+        if (idKamarDinamis == null) {
+            idKamarDinamis = "";
+        }
 
         // 1. Hubungkan ID
         tvDurasi1 = findViewById(R.id.tv_durasi_1);
@@ -95,6 +104,9 @@ public class PemesananActivity extends AppCompatActivity {
                 Toast.makeText(this, "Tanggal Mulai harus diisi!", Toast.LENGTH_SHORT).show();
             } else if (metodePembayaran.isEmpty()) {
                 Toast.makeText(this, "Pilih metode pembayaran terlebih dahulu!", Toast.LENGTH_SHORT).show();
+            } else if (idKamarDinamis.isEmpty()) {
+                // 👇 TAMBAHAN: Cegah error kalau ID belum tertangkap 👇
+                Toast.makeText(this, "Error: ID Kamar tidak ditemukan!", Toast.LENGTH_LONG).show();
             } else {
                 int totalBayar = hargaKamarPerBulan * durasiBulan;
 
@@ -102,12 +114,15 @@ public class PemesananActivity extends AppCompatActivity {
                 Intent intent = new Intent(this, PembayaranActivity.class);
 
                 // Ubah semua angka jadi String untuk mempermudah upload ke Laravel
-                intent.putExtra("TOTAL_BAYAR", String.valueOf(totalBayar));
-                intent.putExtra("DURASI", String.valueOf(durasiBulan));
+                // Catatan: PembayaranActivity kamu sepertinya pakai getIntExtra,
+                // pastikan cocok. Jika di sana int, biarkan int.
+                intent.putExtra("TOTAL_BAYAR", totalBayar); // Diubah jadi int sesuai file PembayaranActivity kamu
+                intent.putExtra("DURASI", durasiBulan); // Diubah jadi int
                 intent.putExtra("TANGGAL_MULAI", tanggalMulai);
-
-                // INI YANG PALING PENTING:
                 intent.putExtra("METODE_PEMBAYARAN", metodePembayaran);
+
+                // 👇 TAMBAHAN: KIRIM ID KAMAR DINAMIS KE PEMBAYARAN ACTIVITY 👇
+                intent.putExtra("ID_KAMAR", idKamarDinamis);
 
                 // Bawa juga Tipe Kamar jika sebelumnya dari halaman Detail Kamar
                 String tipeKamar = getIntent().getStringExtra("TIPE_KAMAR");

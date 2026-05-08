@@ -1,18 +1,38 @@
-package com.delfy.kost.api;
+package com.delfy.kost.api; // Sesuaikan dengan struktur folder kamu
+
+import com.google.gson.annotations.SerializedName;
 
 public class KamarRequest {
-    private String no_kamar;
+
+    @SerializedName("no_kamar")
+    private String noKamar;
+
+    // 👇 INI DIA WADAH BARUNYA 👇
+    @SerializedName("tipe_kamar")
+    private String tipeKamar;
+
+    @SerializedName("harga")
     private int harga;
+
+    @SerializedName("status")
     private String status;
 
-    // --- TAMBAHKAN BARIS INI ---
-    private String id_pemilik;
+    @SerializedName("id_pemilik")
+    private String idPemilik;
 
-    // UBAH JUGA GENERATORNYA (CONSTRUCTOR) JADI SEPERTI INI:
-    public KamarRequest(String no_kamar, int harga, String status, String id_pemilik) {
-        this.no_kamar = no_kamar;
+    // Constructor (Urutannya sudah disesuaikan dengan TambahKamarActivity kamu)
+    public KamarRequest(String noKamar, String tipeKamar, int harga, String status, String idPemilik) {
+        this.noKamar = noKamar;
+        this.tipeKamar = tipeKamar;
         this.harga = harga;
         this.status = status;
-        this.id_pemilik = id_pemilik; // Masukkan datanya
+        this.idPemilik = idPemilik;
     }
+
+    // Getter (Opsional, tapi bagus untuk kelengkapan)
+    public String getNoKamar() { return noKamar; }
+    public String getTipeKamar() { return tipeKamar; }
+    public int getHarga() { return harga; }
+    public String getStatus() { return status; }
+    public String getIdPemilik() { return idPemilik; }
 }

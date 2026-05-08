@@ -103,6 +103,27 @@
                 android:textSize="16sp"
                 android:layout_marginBottom="24dp"/>
 
+            <!-- 👇 TAMBAHAN UNTUK TIPE KAMAR 👇 -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Pilih Tipe Kamar"
+                android:textColor="@color/colorPrimary"
+                android:fontFamily="serif"
+                android:textStyle="bold"
+                android:textSize="18sp"
+                android:layout_marginBottom="8dp"/>
+
+            <Spinner
+                android:id="@+id/spinner_tipe_kamar"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@drawable/bg_card_outline_black"
+                android:paddingStart="8dp"
+                android:paddingEnd="8dp"
+                android:layout_marginBottom="24dp"/>
+            <!-- 👆 AKHIR TAMBAHAN TIPE KAMAR 👆 -->
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -145,6 +166,36 @@
                 android:background="@drawable/bg_card_outline_black"
                 android:paddingStart="8dp"
                 android:paddingEnd="8dp" />
+
+            <!-- Tambahkan ini di dalam LinearLayout ScrollView, setelah Spinner Status -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Foto Kamar"
+                android:textColor="@color/colorPrimary"
+                android:fontFamily="serif"
+                android:textStyle="bold"
+                android:textSize="18sp"
+                android:layout_marginTop="24dp"
+                android:layout_marginBottom="8dp"/>
+
+            <ImageView
+                android:id="@+id/iv_preview_kamar"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:background="@drawable/bg_card_outline_black"
+                android:scaleType="centerCrop"
+                android:src="@drawable/ic_kamar"
+                android:layout_marginBottom="8dp"/>
+
+            <Button
+                android:id="@+id/btn_pilih_foto"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Pilih Foto dari Galeri"
+                android:backgroundTint="@color/text_dark"
+                android:textColor="@color/text_white"
+                android:layout_marginBottom="24dp"/>
 
         </LinearLayout>
     </ScrollView>

@@ -8,6 +8,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ApiClient {
     // PENTING: Ganti IP ini dengan IP Laptopmu yang aktif saat ini!
+    //private static final String BASE_URL = "http://192.168.1.15:8000/";
     private static final String BASE_URL = "http://10.0.2.2:8000/";
     private static Retrofit retrofit = null;
 

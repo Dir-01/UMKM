@@ -4,7 +4,8 @@
     package="com.delfy.kost">
 
     <uses-permission android:name="android.permission.INTERNET" />
-
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" android:maxSdkVersion="32" />
+    <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -24,7 +25,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity android:name=".LoginPenyewaActivity" />
         <activity android:name=".DaftarActivity" />
         <activity android:name=".HomepageActivity" />
@@ -38,7 +38,7 @@
         <activity android:name=".RiwayatPembayaranActivity" />
         <activity android:name=".KomplainActivity" />
         <activity android:name=".KomplainBerhasilActivity" />
-
+        <activity android:name=".EditKamarActivity" />
         <activity android:name=".LoginPemilikActivity" />
         <activity android:name=".DashboardPemilikActivity" />
         <activity android:name=".KelolaKamarActivity" />
@@ -51,7 +51,7 @@
         <activity android:name=".UpdateStatusActivity" />
         <activity android:name=".UpdateStatusBerhasilActivity" />
         <activity android:name=".RingkasanKostActivity" />
-
+        <activity android:name=".DetailPenghuniActivity" />
     </application>
 
 </manifest>

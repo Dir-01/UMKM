@@ -38,30 +38,38 @@ public class RiwayatAdapter extends RecyclerView.Adapter<RiwayatAdapter.ViewHold
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        // 2. Gunakan RiwayatModel, bukan TransaksiItem
         RiwayatResponse.RiwayatModel item = list.get(position);
 
         holder.tvJudul.setText("Sewa " + item.getTipeKamar());
 
-        // 3. Ambil Status (karena di RiwayatModel kita belum buat getStatus, pastikan di RiwayatResponse sudah ada)
-        // Jika belum ada getStatus di RiwayatModel, sesuaikan dengan variabel di Laravel
-        holder.tvStatus.setText("MENUNGGU"); // Default atau sesuaikan
+        // --- PERBAIKAN STATUS DINAMIS ---
+        // Pastikan di RiwayatModel.java sudah ada method getStatus()
+        String statusServer = item.getStatus();
+
+        if (statusServer != null) {
+            holder.tvStatus.setText(statusServer.toUpperCase());
+
+            // Opsional: Beri warna berbeda agar lebih keren
+            if (statusServer.equalsIgnoreCase("Berhasil")) {
+                holder.tvStatus.setTextColor(context.getResources().getColor(android.R.color.holo_green_dark));
+            } else {
+                holder.tvStatus.setTextColor(context.getResources().getColor(android.R.color.holo_orange_dark));
+            }
+        } else {
+            holder.tvStatus.setText("PENDING");
+        }
 
         holder.tvMetode.setText("Metode: " + item.getMetodePembayaran());
 
-        // 4. Format Rupiah
+        // Format Rupiah
         Locale localeID = new Locale("id", "ID");
         NumberFormat formatRupiah = NumberFormat.getCurrencyInstance(localeID);
-        String hargaStr = formatRupiah.format(item.getTotalHarga());
+        holder.tvTglHarga.setText(formatRupiah.format(item.getTotalHarga()));
 
-        // 5. Tampilkan Tanggal dan Harga
-        // Karena di RiwayatModel adanya getIdTransaksi, jika ingin tanggal harus tambah getTanggalMasuk di RiwayatModel
-        holder.tvTglHarga.setText(hargaStr);
-
-        // 6. Tampilkan Foto Bukti
-        // SESUAIKAN IP: Gunakan 10.0.2.2 jika pakai Emulator Android Studio
+        // Tampilkan Foto Bukti
         String urlFoto = "http://10.0.2.2:8000/storage/bukti_bayar/" + item.getBuktiBayar();
-
+        // Ganti IP-nya agar foto bukti bayar muncul
+        //String urlFoto = "http://192.168.1.15:8000/storage/bukti_bayar/" + item.getBuktiBayar();
         Glide.with(context)
                 .load(urlFoto)
                 .placeholder(android.R.drawable.ic_menu_gallery)

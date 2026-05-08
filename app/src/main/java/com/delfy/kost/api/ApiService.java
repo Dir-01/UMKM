@@ -1,5 +1,6 @@
 package com.delfy.kost.api;
 
+import okhttp3.ResponseBody;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import retrofit2.Call;
@@ -13,6 +14,8 @@ import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Part;
 import retrofit2.http.Path;
+import retrofit2.http.Field;
+import retrofit2.http.FormUrlEncoded;
 
 public interface ApiService {
 
@@ -28,10 +31,16 @@ public interface ApiService {
     @POST("api/login_penyewa")
     Call<LoginResponse> loginPenyewa(@Body LoginPenyewaRequest request);
 
-    @POST("api/register_penyewa")
-    Call<LoginResponse> registerPenyewa(@Body RegisterRequest request);
+    @Multipart
+    @POST("api/register-penyewa")
+    Call<LoginResponse> registerPenyewaWithKtp(
+            @Part("nama") RequestBody nama, // SUDAH DIPERBAIKI (bukan nama_lengkap)
+            @Part("email") RequestBody email,
+            @Part("no_hp") RequestBody noHp,
+            @Part("password") RequestBody password,
+            @Part MultipartBody.Part fotoKtp
+    );
 
-    // Ini dibuat tetap bisa menerima Header supaya DashboardPemilik kamu tidak error!
     @GET("api/kamar")
     Call<KamarResponse> getKamar(@Header("Authorization") String token);
 
@@ -42,15 +51,19 @@ public interface ApiService {
     |--------------------------------------------------------------------------
     */
 
-    // 1. Tambah Kamar (Oleh Pemilik)
+    @Multipart
     @Headers("Accept: application/json")
     @POST("api/tambah-kamar")
     Call<KamarResponse> tambahKamar(
             @Header("Authorization") String token,
-            @Body KamarRequest request
+            @Part("no_kamar") RequestBody noKamar,
+            @Part("tipe_kamar") RequestBody tipeKamar,
+            @Part("harga") RequestBody harga,
+            @Part("status") RequestBody status,
+            @Part("id_pemilik") RequestBody idPemilik,
+            @Part MultipartBody.Part fotoKamar // File fisik foto
     );
 
-    // 2. Transaksi / Bayar Kost (Oleh Penyewa)
     @Multipart
     @Headers("Accept: application/json")
     @POST("api/transaksi")
@@ -66,17 +79,14 @@ public interface ApiService {
             @Part MultipartBody.Part bukti_bayar
     );
 
-    // 3. Riwayat Transaksi Penyewa
     @Headers("Accept: application/json")
     @GET("api/riwayat-penyewa")
     Call<RiwayatResponse> getRiwayat(@Header("Authorization") String token);
 
-    // 4. Semua Transaksi (Oleh Pemilik)
     @Headers("Accept: application/json")
     @GET("api/semua-transaksi")
     Call<RiwayatResponse> getSemuaPesanan(@Header("Authorization") String token);
 
-    // 5. Konfirmasi Pembayaran (Oleh Pemilik)
     @Headers("Accept: application/json")
     @PUT("api/konfirmasi-bayar/{id}")
     Call<LoginResponse> konfirmasiPembayaran(
@@ -84,7 +94,6 @@ public interface ApiService {
             @Path("id") String idTransaksi
     );
 
-    // 6. Kelola Kamar (Update & Delete)
     @Headers("Accept: application/json")
     @PUT("api/update-kamar/{id}")
     Call<KamarResponse> updateKamar(
@@ -100,8 +109,46 @@ public interface ApiService {
             @Path("id") int id
     );
 
-    // 7. Logout
     @Headers("Accept: application/json")
     @POST("api/logout")
     Call<LoginResponse> logout(@Header("Authorization") String token);
+
+    @GET("api/pesanan/penghuni") // Sesuaikan route-nya jika berbeda di web.php/api.php
+    Call<RiwayatResponse> getDaftarPenghuni(@Header("Authorization") String token);
+
+    @GET("api/penyewa/{id}")
+    Call<PenyewaDetailResponse> getDetailPenyewa(
+            @Header("Authorization") String token,
+            @Path("id") String idPenyewa
+    );
+    @GET("api/komplain-masuk")
+    Call<ListKomplainResponse> getKomplainMasuk(
+            @Header("Authorization") String token
+    );
+
+    // Untuk POV Penyewa: Mengirim data komplain ke database
+    @FormUrlEncoded
+    @POST("api/kirim-komplain")
+    Call<KomplainResponse> kirimKomplain(
+            @Header("Authorization") String token,
+            @Field("id_penyewa") String idPenyewa, // <-- TAMBAHKAN BARIS INI
+            @Field("no_kamar") String noKamar,
+            @Field("subjek") String subjek,
+            @Field("deskripsi") String deskripsi
+    );
+    @FormUrlEncoded
+    @PUT("api/update-status-komplain/{id}")
+    Call<KomplainResponse> updateStatusKomplain(
+            @Header("Authorization") String token,
+            @Path("id") String idKomplain,
+            @Field("status") String status
+    );
+
+    @FormUrlEncoded
+    @POST("api/kamar/update-status/{id}") // Sesuaikan dengan route Laravel kamu
+    Call<ResponseBody> updateStatusKamar(
+            @Header("Authorization") String token,
+            @Path("id") String idKamar,
+            @Field("status") String status
+    );
 }

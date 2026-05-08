@@ -38,6 +38,18 @@ public class RiwayatResponse {
         @SerializedName("bukti_bayar")
         private String buktiBayar;
 
+        @SerializedName("penyewa")
+        private PenyewaModel penyewa;
+
+        @SerializedName("kamar")
+        private KamarResponse.KamarModel kamar;
+
+        @SerializedName("status")
+        private String status;
+
+        @SerializedName("id_penyewa") // Pastikan sesuai dengan nama kolom di Navicat/Laravel
+        private String idPenyewa;
+
         // Getter untuk mengambil data
         public String getIdTransaksi() { return idTransaksi; }
         public String getTipeKamar() { return tipeKamar; }
@@ -45,5 +57,15 @@ public class RiwayatResponse {
         public int getTotalHarga() { return totalHarga; }
         public String getMetodePembayaran() { return metodePembayaran; }
         public String getBuktiBayar() { return buktiBayar; }
+
+        public PenyewaModel getPenyewa() {
+            return penyewa;
+        }
+        public KamarResponse.KamarModel getKamar() {
+            return kamar;
+        }
+        public String getStatus() { return status; }
+        public String getIdPenyewa() { return idPenyewa; }
     }
+
 }

@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_screen"
+    android:orientation="vertical"
+    android:padding="24dp">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Edit Status Kamar"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:textColor="@android:color/black"
+        android:layout_marginBottom="24dp"/>
+
+    <TextView
+        android:id="@+id/tv_edit_tipe"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Tipe Kamar: -"
+        android:textSize="18sp"
+        android:layout_marginBottom="16dp"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Status Kamar Saat Ini:"
+        android:textStyle="bold"
+        android:layout_marginBottom="8dp"/>
+
+    <RadioGroup
+        android:id="@+id/rg_status"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="32dp">
+
+        <RadioButton
+            android:id="@+id/rb_kosong"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Kosong"
+            android:textSize="16sp"/>
+
+        <RadioButton
+            android:id="@+id/rb_terisi"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Terisi"
+            android:textSize="16sp"/>
+
+        <RadioButton
+            android:id="@+id/rb_perbaikan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Dalam Perbaikan"
+            android:textSize="16sp"/>
+    </RadioGroup>
+
+    <Button
+        android:id="@+id/btn_simpan_edit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Simpan Perubahan"
+        android:backgroundTint="@color/colorPrimary"/>
+
+</LinearLayout>

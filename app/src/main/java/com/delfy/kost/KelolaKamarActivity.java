@@ -1,5 +1,6 @@
 package com.delfy.kost;
 
+import android.widget.ImageView;
 import com.delfy.kost.adapter.KamarAdapter;
 
 import android.content.Intent;
@@ -32,6 +33,8 @@ public class KelolaKamarActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_kelola_kamar);
+        ImageView btnBack = findViewById(R.id.btn_back);
+        btnBack.setOnClickListener(v -> finish());
 
         rvKamar = findViewById(R.id.rvKamar);
         rvKamar.setLayoutManager(new LinearLayoutManager(this));

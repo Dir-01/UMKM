@@ -39,6 +39,7 @@
             android:textSize="16sp"
             android:layout_marginBottom="32dp"/>
 
+        <!-- 1. NAMA LENGKAP -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -67,6 +68,7 @@
                 android:textSize="16sp" />
         </LinearLayout>
 
+        <!-- 2. EMAIL -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -95,6 +97,7 @@
                 android:textSize="16sp" />
         </LinearLayout>
 
+        <!-- 3. NOMOR WA -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -123,6 +126,63 @@
                 android:textSize="16sp" />
         </LinearLayout>
 
+        <!-- 4. UPLOAD FOTO KTP (BARU) -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginBottom="16dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="serif"
+                android:text="Foto KTP"
+                android:textColor="@color/text_white"
+                android:textSize="18sp"
+                android:layout_marginBottom="8dp"/>
+
+            <!-- Area Kotak Upload -->
+            <FrameLayout
+                android:id="@+id/btn_upload_ktp"
+                android:layout_width="match_parent"
+                android:layout_height="120dp"
+                android:background="@drawable/bg_input_grey"
+                android:clickable="true"
+                android:focusable="true">
+
+                <!-- Teks dan Icon Default -->
+                <LinearLayout
+                    android:id="@+id/layout_placeholder_ktp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:gravity="center"
+                    android:layout_gravity="center">
+                    <ImageView
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
+                        android:src="@android:drawable/ic_menu_camera" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:fontFamily="serif"
+                        android:text="Ketuk untuk upload KTP"
+                        android:textColor="#757575"
+                        android:textSize="14sp" />
+                </LinearLayout>
+
+                <!-- Preview Foto KTP yang dipilih -->
+                <ImageView
+                    android:id="@+id/iv_preview_ktp"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="centerCrop"
+                    android:visibility="gone" />
+            </FrameLayout>
+        </LinearLayout>
+
+        <!-- 5. PASSWORD -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -151,6 +211,7 @@
                 android:textSize="16sp" />
         </LinearLayout>
 
+        <!-- TOMBOL DAFTAR -->
         <LinearLayout
             android:id="@+id/btn_daftar_akun"
             android:layout_width="match_parent"

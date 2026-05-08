@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -49,7 +50,7 @@
                 android:id="@+id/tv_nama_user"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Conrad Fisher"
+                android:text="Memuat nama..."
                 android:textSize="18sp"
                 android:textStyle="bold"
                 android:fontFamily="serif"
@@ -61,44 +62,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
-                <LinearLayout
-                    android:id="@+id/menu_kamar_sewa"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:gravity="center_vertical"
-                    android:paddingTop="12dp"
-                    android:paddingBottom="12dp"
-                    android:clickable="true"
-                    android:focusable="true">
-
-                    <ImageView
-                        android:layout_width="32dp"
-                        android:layout_height="32dp"
-                        android:src="@drawable/ic_menu_kamar" />
-
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:layout_marginStart="16dp"
-                        android:text="Kamar Sewa Saya"
-                        android:textSize="18sp"
-                        android:textColor="@color/text_dark" />
-
-                    <ImageView
-                        android:layout_width="24dp"
-                        android:layout_height="24dp"
-                        android:src="@drawable/ic_arrow_right"
-                        android:tint="@color/text_dark"/>
-                </LinearLayout>
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="@color/text_dark"
-                    android:layout_marginStart="36dp" />
-
+                <!-- MENU RIWAYAT PEMBAYARAN -->
                 <LinearLayout
                     android:id="@+id/menu_riwayat"
                     android:layout_width="match_parent"
@@ -128,7 +92,7 @@
                         android:layout_width="24dp"
                         android:layout_height="24dp"
                         android:src="@drawable/ic_arrow_right"
-                        android:tint="@color/text_dark"/>
+                        app:tint="@color/text_dark"/>
                 </LinearLayout>
 
                 <View
@@ -137,6 +101,7 @@
                     android:background="@color/text_dark"
                     android:layout_marginStart="36dp" />
 
+                <!-- MENU KOMPLAIN -->
                 <LinearLayout
                     android:id="@+id/menu_komplain"
                     android:layout_width="match_parent"
@@ -166,7 +131,7 @@
                         android:layout_width="24dp"
                         android:layout_height="24dp"
                         android:src="@drawable/ic_arrow_right"
-                        android:tint="@color/text_dark"/>
+                        app:tint="@color/text_dark"/>
                 </LinearLayout>
 
                 <View
@@ -211,6 +176,7 @@
         </LinearLayout>
     </ScrollView>
 
+    <!-- BOTTOM NAVIGATION -->
     <LinearLayout
         android:id="@+id/bottom_navigation"
         android:layout_width="match_parent"
@@ -219,9 +185,7 @@
         android:background="@color/bg_screen"
         android:paddingTop="12dp"
         android:paddingBottom="12dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
+        app:layout_constraintBottom_toBottomOf="parent">
 
         <LinearLayout
             android:id="@+id/nav_home"
@@ -242,7 +206,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Home"
-                android:textSize="16sp"
+                android:textSize="14sp"
                 android:textColor="@color/text_dark"/>
         </LinearLayout>
 
@@ -252,9 +216,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:orientation="vertical"
-            android:gravity="center"
-            android:clickable="true"
-            android:focusable="true">
+            android:gravity="center">
 
             <ImageView
                 android:layout_width="32dp"
@@ -265,7 +227,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Profile User"
-                android:textSize="16sp"
+                android:textSize="14sp"
+                android:textStyle="bold"
                 android:textColor="@color/text_dark"/>
         </LinearLayout>
     </LinearLayout>

@@ -1,6 +1,7 @@
 package com.delfy.kost.adapter;
 
 import android.content.Context;
+import android.content.Intent; // Tambahkan ini
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,15 +9,16 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.delfy.kost.R;
-import com.delfy.kost.model.Penghuni;
+import com.delfy.kost.DetailPenghuniActivity; // Pastikan Activity ini sudah dibuat
+import com.delfy.kost.api.RiwayatResponse;
 import java.util.List;
 
 public class PenghuniAdapter extends RecyclerView.Adapter<PenghuniAdapter.PenghuniViewHolder> {
 
     private Context context;
-    private List<Penghuni> penghuniList;
+    private List<RiwayatResponse.RiwayatModel> penghuniList;
 
-    public PenghuniAdapter(Context context, List<Penghuni> penghuniList) {
+    public PenghuniAdapter(Context context, List<RiwayatResponse.RiwayatModel> penghuniList) {
         this.context = context;
         this.penghuniList = penghuniList;
     }
@@ -30,11 +32,28 @@ public class PenghuniAdapter extends RecyclerView.Adapter<PenghuniAdapter.Penghu
 
     @Override
     public void onBindViewHolder(@NonNull PenghuniViewHolder holder, int position) {
-        Penghuni penghuni = penghuniList.get(position);
-        holder.tvNamaPenghuni.setText(penghuni.getNamaPenghuni());
-        holder.tvNoKamar.setText(penghuni.getNoKamar());
-        holder.tvKontrak.setText(penghuni.getKontrak());
-        holder.tvKontak.setText(penghuni.getKontak());
+        RiwayatResponse.RiwayatModel data = penghuniList.get(position);
+
+        if (data.getPenyewa() != null) {
+            holder.tvNamaPenghuni.setText("Nama Penghuni : " + data.getPenyewa().getNama());
+            holder.tvKontak.setText("Kontak : " + data.getPenyewa().getNoHp());
+        }
+
+        if (data.getKamar() != null) {
+            holder.tvNoKamar.setText("No. Kamar : " + data.getKamar().getNoKamar());
+        }
+
+        holder.tvKontrak.setText("Kontrak : " + data.getDurasiSewa() + " Bulan");
+
+        // --- FITUR KLIK UNTUK DETAIL KTP ---
+        holder.itemView.setOnClickListener(v -> {
+            if (data.getPenyewa() != null) {
+                Intent intent = new Intent(context, DetailPenghuniActivity.class);
+                // Kirim ID Penyewa agar di halaman detail bisa panggil API show($id)
+                intent.putExtra("ID_PENYEWA", data.getIdPenyewa());
+                context.startActivity(intent);
+            }
+        });
     }
 
     @Override
@@ -42,7 +61,7 @@ public class PenghuniAdapter extends RecyclerView.Adapter<PenghuniAdapter.Penghu
         return penghuniList != null ? penghuniList.size() : 0;
     }
 
-    public void updateList(List<Penghuni> newList) {
+    public void updateList(List<RiwayatResponse.RiwayatModel> newList) {
         this.penghuniList = newList;
         notifyDataSetChanged();
     }

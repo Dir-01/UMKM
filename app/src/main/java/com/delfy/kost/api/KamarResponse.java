@@ -11,7 +11,6 @@ public class KamarResponse {
     @SerializedName("message")
     private String message;
 
-    // Ini yang error tadi karena kelas KamarModel-nya sempat hilang
     @SerializedName("data")
     private List<KamarModel> data;
 
@@ -19,10 +18,9 @@ public class KamarResponse {
     public String getMessage() { return message; }
     public List<KamarModel> getData() { return data; }
 
-    // --- INNER CLASS UNTUK MODEL KAMAR ---
     public static class KamarModel {
         @SerializedName("id_kamar")
-        private int id_kamar; // Sudah diubah jadi INT sesuai database Navicat!
+        private int id_kamar;
 
         @SerializedName("no_kamar")
         private String no_kamar;
@@ -36,11 +34,19 @@ public class KamarResponse {
         @SerializedName("id_pemilik")
         private String id_pemilik;
 
-        // Getter
+        @SerializedName("tipe_kamar")
+        private String tipe_kamar;
+
+        @SerializedName("foto_kamar")
+        private String foto_kamar;
+
+        // Getter untuk Adapter
         public int getIdKamar() { return id_kamar; }
         public String getNoKamar() { return no_kamar; }
         public int getHarga() { return harga; }
         public String getStatus() { return status; }
         public String getIdPemilik() { return id_pemilik; }
+        public String getTipeKamar() { return tipe_kamar; }
+        public String getFotoKamar() { return foto_kamar; }
     }
 }

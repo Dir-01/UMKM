@@ -11,6 +11,7 @@
         android:orientation="vertical"
         android:paddingBottom="32dp">
 
+        <!-- HEADER -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="120dp"
@@ -24,7 +25,7 @@
                 android:id="@+id/btn_back"
                 android:layout_width="32dp"
                 android:layout_height="32dp"
-                android:src="@drawable/ic_arrow_back"
+                android:src="@drawable/ic_back_white"
                 android:clickable="true"
                 android:focusable="true"/>
 
@@ -41,30 +42,32 @@
                 android:layout_marginEnd="32dp"/>
         </LinearLayout>
 
+        <!-- GRID CONTAINER -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:padding="24dp"
-            android:weightSum="2">
+            android:orientation="vertical"
+            android:padding="20dp">
 
+            <!-- BARIS 1: KELOLA KAMAR & PESANAN -->
             <LinearLayout
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="vertical"
-                android:layout_marginEnd="8dp">
+                android:orientation="horizontal"
+                android:weightSum="2"
+                android:layout_marginBottom="16dp">
 
                 <LinearLayout
                     android:id="@+id/card_kelola_kamar"
-                    android:layout_width="match_parent"
-                    android:layout_height="160dp"
+                    android:layout_width="0dp"
+                    android:layout_height="180dp"
+                    android:layout_weight="1"
+                    android:layout_marginEnd="8dp"
                     android:background="@drawable/bg_dash_card_gold"
                     android:gravity="center"
                     android:orientation="vertical"
                     android:clickable="true"
-                    android:focusable="true"
-                    android:layout_marginBottom="16dp">
+                    android:focusable="true">
                     <ImageView
                         android:layout_width="64dp"
                         android:layout_height="64dp"
@@ -75,7 +78,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
                         android:fontFamily="serif"
-                        android:text="Kelola\nkamar"
+                        android:text="Kelola\nKamar"
                         android:textAlignment="center"
                         android:textColor="@color/colorPrimary"
                         android:textSize="18sp"
@@ -83,15 +86,52 @@
                 </LinearLayout>
 
                 <LinearLayout
-                    android:id="@+id/card_data_penghuni"
-                    android:layout_width="match_parent"
-                    android:layout_height="160dp"
+                    android:id="@+id/card_pesanan"
+                    android:layout_width="0dp"
+                    android:layout_height="180dp"
+                    android:layout_weight="1"
+                    android:layout_marginStart="8dp"
                     android:background="@drawable/bg_dash_card_blue"
                     android:gravity="center"
                     android:orientation="vertical"
                     android:clickable="true"
-                    android:focusable="true"
-                    android:layout_marginBottom="16dp">
+                    android:focusable="true">
+                    <ImageView
+                        android:layout_width="64dp"
+                        android:layout_height="64dp"
+                        android:src="@drawable/ic_bed"
+                        android:tint="@color/btn_gold"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:fontFamily="serif"
+                        android:text="Pesanan"
+                        android:textAlignment="center"
+                        android:textColor="@color/btn_gold"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <!-- BARIS 2: DATA PENGHUNI & KOMPLAIN MASUK -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="2">
+
+                <LinearLayout
+                    android:id="@+id/card_data_penghuni"
+                    android:layout_width="0dp"
+                    android:layout_height="180dp"
+                    android:layout_weight="1"
+                    android:layout_marginEnd="8dp"
+                    android:background="@drawable/bg_dash_card_blue"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:clickable="true"
+                    android:focusable="true">
                     <ImageView
                         android:layout_width="64dp"
                         android:layout_height="64dp"
@@ -109,9 +149,11 @@
                 </LinearLayout>
 
                 <LinearLayout
-                    android:id="@+id/card_ringkasan_kost"
-                    android:layout_width="match_parent"
-                    android:layout_height="160dp"
+                    android:id="@+id/card_komplain_masuk"
+                    android:layout_width="0dp"
+                    android:layout_height="180dp"
+                    android:layout_weight="1"
+                    android:layout_marginStart="8dp"
                     android:background="@drawable/bg_dash_card_gold"
                     android:gravity="center"
                     android:orientation="vertical"
@@ -120,14 +162,14 @@
                     <ImageView
                         android:layout_width="64dp"
                         android:layout_height="64dp"
-                        android:src="@drawable/ic_nav_home"
+                        android:src="@drawable/ic_menu_komplain"
                         android:tint="@color/colorPrimary"/>
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
                         android:fontFamily="serif"
-                        android:text="Ringkasan\nKost"
+                        android:text="Komplain\nMasuk"
                         android:textAlignment="center"
                         android:textColor="@color/colorPrimary"
                         android:textSize="18sp"
@@ -135,75 +177,6 @@
                 </LinearLayout>
             </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="vertical"
-                android:layout_marginStart="8dp">
-
-                <LinearLayout
-                    android:id="@+id/card_pesanan"
-                    android:layout_width="match_parent"
-                    android:layout_height="220dp"
-                    android:background="@drawable/bg_dash_card_blue"
-                    android:gravity="center"
-                    android:orientation="vertical"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:layout_marginBottom="16dp">
-                    <ImageView
-                        android:layout_width="80dp"
-                        android:layout_height="80dp"
-                        android:src="@drawable/ic_bed"
-                        android:tint="@color/btn_gold"/>
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="16dp"
-                        android:fontFamily="serif"
-                        android:text="Pesanan"
-                        android:textAlignment="center"
-                        android:textColor="@color/btn_gold"
-                        android:textSize="20sp"
-                        android:textStyle="bold" />
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:fontFamily="serif"
-                        android:text="Lihat Daftar"
-                        android:textAlignment="center"
-                        android:textColor="@color/btn_gold"
-                        android:textSize="14sp" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/card_komplain_masuk"
-                    android:layout_width="match_parent"
-                    android:layout_height="220dp"
-                    android:background="@drawable/bg_dash_card_gold"
-                    android:gravity="center"
-                    android:orientation="vertical"
-                    android:clickable="true"
-                    android:focusable="true">
-                    <ImageView
-                        android:layout_width="80dp"
-                        android:layout_height="80dp"
-                        android:src="@drawable/ic_menu_komplain"
-                        android:tint="@color/colorPrimary"/>
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="16dp"
-                        android:fontFamily="serif"
-                        android:text="Komplain\nmasuk"
-                        android:textAlignment="center"
-                        android:textColor="@color/colorPrimary"
-                        android:textSize="20sp"
-                        android:textStyle="bold" />
-                </LinearLayout>
-            </LinearLayout>
         </LinearLayout>
     </LinearLayout>
 </ScrollView>

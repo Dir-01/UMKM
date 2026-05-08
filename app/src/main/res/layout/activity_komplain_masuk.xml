@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/bg_screen"
@@ -11,6 +12,7 @@
         android:orientation="vertical"
         android:paddingBottom="32dp">
 
+        <!-- Header -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="100dp"
@@ -35,6 +37,7 @@
             android:orientation="vertical"
             android:padding="24dp">
 
+            <!-- Statistik Box -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -42,6 +45,7 @@
                 android:weightSum="2"
                 android:layout_marginBottom="24dp">
 
+                <!-- Statistik Selesai -->
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -54,9 +58,10 @@
                     android:paddingBottom="12dp">
 
                     <TextView
+                        android:id="@+id/tv_count_selesai"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="3"
+                        android:text="0"
                         android:textColor="#00FF00"
                         android:textSize="48sp"
                         android:textStyle="bold"/>
@@ -69,6 +74,7 @@
                         android:textSize="20sp"/>
                 </LinearLayout>
 
+                <!-- Statistik Menunggu -->
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -81,9 +87,10 @@
                     android:paddingBottom="12dp">
 
                     <TextView
+                        android:id="@+id/tv_count_menunggu"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="2"
+                        android:text="0"
                         android:textColor="#FF0000"
                         android:textSize="48sp"
                         android:textStyle="bold"/>
@@ -97,65 +104,12 @@
                 </LinearLayout>
             </LinearLayout>
 
-            <RelativeLayout
+            <!-- Container Daftar Komplain Dinamis -->
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_komplain_masuk"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/bg_card_outline_black"
-                    android:orientation="horizontal"
-                    android:padding="16dp"
-                    android:layout_marginBottom="16dp">
-
-                    <ImageView
-                        android:layout_width="60dp"
-                        android:layout_height="60dp"
-                        android:src="@drawable/ic_nav_profile"/>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="16dp"
-                        android:lineSpacingExtra="4dp"
-                        android:text="Nama Penghuni :\nNo. Kamar :\nKeluhan :\nStatus :"
-                        android:textColor="#757575"
-                        android:textStyle="bold"
-                        android:textSize="14sp"/>
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/btn_update_status_1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentBottom="true"
-                    android:layout_alignParentEnd="true"
-                    android:background="@drawable/bg_btn_dark_blue_small"
-                    android:gravity="center"
-                    android:orientation="horizontal"
-                    android:paddingStart="16dp"
-                    android:paddingEnd="16dp"
-                    android:paddingTop="8dp"
-                    android:paddingBottom="8dp"
-                    android:clickable="true"
-                    android:focusable="true">
-
-                    <ImageView
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
-                        android:src="@drawable/ic_menu_komplain"
-                        android:tint="@color/text_white"/>
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="8dp"
-                        android:text="Update Status"
-                        android:textColor="@color/text_white"
-                        android:textSize="12sp"/>
-                </LinearLayout>
-            </RelativeLayout>
+                android:nestedScrollingEnabled="false" />
 
         </LinearLayout>
     </LinearLayout>

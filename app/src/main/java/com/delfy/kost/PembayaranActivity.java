@@ -73,19 +73,44 @@ public class PembayaranActivity extends AppCompatActivity {
 
         // 2. Tangkap Data dari Intent
         Intent intent = getIntent();
+
+        // Menangkap durasi (Coba sebagai Int, kalau gagal coba sebagai String)
+        durasiInt = intent.getIntExtra("DURASI", 0);
+        if (durasiInt == 0) {
+            String durStr = intent.getStringExtra("DURASI");
+            if (durStr != null) {
+                try { durasiInt = Integer.parseInt(durStr.replaceAll("[^\\d]", "")); } catch (Exception e) { durasiInt = 1; }
+            } else { durasiInt = 1; }
+        }
+
+        // Menangkap total bayar (Coba sebagai Int, kalau gagal coba sebagai String)
         totalBayarInt = intent.getIntExtra("TOTAL_BAYAR", 0);
-        durasiInt = intent.getIntExtra("DURASI", 1);
+        if (totalBayarInt == 0) {
+            String totalStr = intent.getStringExtra("TOTAL_BAYAR");
+            // Fallback key
+            if (totalStr == null) totalStr = intent.getStringExtra("TOTAL_HARGA");
+            if (totalStr == null) totalStr = intent.getStringExtra("TOTAL");
+
+            if (totalStr != null && !totalStr.isEmpty()) {
+                try {
+                    String cleanString = totalStr.replaceAll("[^\\d]", "");
+                    totalBayarInt = Integer.parseInt(cleanString);
+                } catch (Exception e) {
+                    totalBayarInt = 0;
+                }
+            }
+        }
+
         tanggalMulaiStr = intent.getStringExtra("TANGGAL_MULAI");
         metodePembayaranStr = intent.getStringExtra("METODE_PEMBAYARAN");
         tipeKamarStr = intent.getStringExtra("TIPE_KAMAR");
-        idKamarStr = intent.getStringExtra("ID_KAMAR"); // Tangkap ID asli (misal 11 atau 13)
+        idKamarStr = intent.getStringExtra("ID_KAMAR");
 
         // 3. Tampilkan Data & Hitung Tanggal Selesai Otomatis
         NumberFormat formatRupiah = NumberFormat.getCurrencyInstance(new Locale("id", "ID"));
         tvTotalBayarAkhir.setText(formatRupiah.format(totalBayarInt));
         tvDurasiSewaAkhir.setText("Durasi sewa: " + durasiInt + " Bulan");
 
-        // Panggil fungsi hitung tanggal agar UI langsung terupdate
         hitungTanggalSelesai(tanggalMulaiStr, durasiInt);
 
         // 4. Listener
@@ -98,6 +123,8 @@ public class PembayaranActivity extends AppCompatActivity {
         btnSelesai.setOnClickListener(v -> {
             if (fotoBuktiUri == null) {
                 Toast.makeText(this, "Wajib upload bukti pembayaran!", Toast.LENGTH_SHORT).show();
+            } else if (totalBayarInt == 0) {
+                Toast.makeText(this, "Harga tidak valid, harap ulangi pesanan", Toast.LENGTH_SHORT).show();
             } else {
                 uploadDataKeServer();
             }
@@ -129,29 +156,36 @@ public class PembayaranActivity extends AppCompatActivity {
                 return;
             }
 
-            // Pastikan ID Kamar tidak kosong (Gunakan ID Kamar asli dari Navicat)
-            String finalIdKamar = (idKamarStr != null) ? idKamarStr : "11";
+            // --- PERBAIKAN: Jangan dipaksa ke "12" ---
+            if (idKamarStr == null || idKamarStr.isEmpty()) {
+                Toast.makeText(this, "ID Kamar tidak terbaca dari halaman sebelumnya!", Toast.LENGTH_LONG).show();
+                return;
+            }
 
-            // Convert tanggal ke format Laravel YYYY-MM-DD
-            SimpleDateFormat inputSdf = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
-            SimpleDateFormat outputSdf = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
-            String tglLaravel = outputSdf.format(inputSdf.parse(tanggalMulaiStr));
+            // Format Tanggal
+            String tglLaravel;
+            try {
+                SimpleDateFormat inputSdf = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
+                SimpleDateFormat outputSdf = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+                tglLaravel = outputSdf.format(inputSdf.parse(tanggalMulaiStr));
+            } catch (Exception e) {
+                tglLaravel = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());
+            }
 
-            // Siapkan RequestBody
+            // RequestBody
             RequestBody rbPenyewa = RequestBody.create(MediaType.parse("text/plain"), idPenyewa);
-            RequestBody rbKamar = RequestBody.create(MediaType.parse("text/plain"), finalIdKamar);
-            RequestBody rbTipe = RequestBody.create(MediaType.parse("text/plain"), tipeKamarStr);
+            RequestBody rbKamar = RequestBody.create(MediaType.parse("text/plain"), idKamarStr);
+            RequestBody rbTipe = RequestBody.create(MediaType.parse("text/plain"), tipeKamarStr != null ? tipeKamarStr : "Tipe Kamar");
             RequestBody rbTgl = RequestBody.create(MediaType.parse("text/plain"), tglLaravel);
             RequestBody rbDurasi = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(durasiInt));
             RequestBody rbTotal = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(totalBayarInt));
-            RequestBody rbMetode = RequestBody.create(MediaType.parse("text/plain"), metodePembayaranStr);
+            RequestBody rbMetode = RequestBody.create(MediaType.parse("text/plain"), metodePembayaranStr != null ? metodePembayaranStr : "Transfer");
 
             File file = uriToFile(fotoBuktiUri);
             RequestBody rbFile = RequestBody.create(MediaType.parse("image/*"), file);
             MultipartBody.Part partFoto = MultipartBody.Part.createFormData("bukti_bayar", file.getName(), rbFile);
 
-            ApiService apiService = ApiClient.getClient();
-            apiService.kirimPembayaran("Bearer " + token, rbPenyewa, rbKamar, rbTipe, rbTgl, rbDurasi, rbTotal, rbMetode, partFoto)
+            ApiClient.getClient().kirimPembayaran("Bearer " + token, rbPenyewa, rbKamar, rbTipe, rbTgl, rbDurasi, rbTotal, rbMetode, partFoto)
                     .enqueue(new Callback<TransaksiResponse>() {
                         @Override
                         public void onResponse(Call<TransaksiResponse> call, Response<TransaksiResponse> response) {
@@ -159,18 +193,31 @@ public class PembayaranActivity extends AppCompatActivity {
                                 Toast.makeText(PembayaranActivity.this, "Pembayaran Berhasil!", Toast.LENGTH_LONG).show();
                                 finish();
                             } else {
-                                Log.e("Delfy_Debug", "Error: " + response.code());
-                                Toast.makeText(PembayaranActivity.this, "Gagal simpan (Error " + response.code() + ")", Toast.LENGTH_SHORT).show();
+                                // Blok untuk menangani error dari Laravel (404, 422, 500, dll)
+                                try {
+                                    // Ambil isi error hanya SATU KALI
+                                    String errorBody = response.errorBody().string();
+                                    Log.e("Delfy_Error", "Pesan dari Server: " + errorBody);
+
+                                    // Tampilkan pesan asli dari Laravel agar kamu tahu apa yang salah
+                                    // Jika error 404, biasanya id_kamar tidak ditemukan di database
+                                    Toast.makeText(PembayaranActivity.this, "Gagal: " + errorBody, Toast.LENGTH_LONG).show();
+
+                                } catch (Exception e) {
+                                    Log.e("Delfy_Error", "Gagal membaca pesan error", e);
+                                    Toast.makeText(PembayaranActivity.this, "Gagal simpan data (Kode: " + response.code() + ")", Toast.LENGTH_SHORT).show();
+                                }
                             }
                         }
 
                         @Override
                         public void onFailure(Call<TransaksiResponse> call, Throwable t) {
-                            Toast.makeText(PembayaranActivity.this, "Cek Koneksi Server!", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(PembayaranActivity.this, "Koneksi Gagal!", Toast.LENGTH_SHORT).show();
                         }
                     });
+
         } catch (Exception e) {
-            e.printStackTrace();
+            Toast.makeText(this, "Error: " + e.getMessage(), Toast.LENGTH_SHORT).show();
         }
     }
 

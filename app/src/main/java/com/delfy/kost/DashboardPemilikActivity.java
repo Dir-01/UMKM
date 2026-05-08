@@ -30,9 +30,8 @@ public class DashboardPemilikActivity extends AppCompatActivity {
         ImageView btnBack = findViewById(R.id.btn_back);
         LinearLayout cardKelola = findViewById(R.id.card_kelola_kamar);
         LinearLayout cardPenghuni = findViewById(R.id.card_data_penghuni);
-        LinearLayout cardRingkasan = findViewById(R.id.card_ringkasan_kost);
         LinearLayout cardKomplain = findViewById(R.id.card_komplain_masuk);
-        LinearLayout cardPesanan = findViewById(R.id.card_pesanan); // ID Baru dari XML
+        LinearLayout cardPesanan = findViewById(R.id.card_pesanan);
 
         // 2. FITUR LOGOUT
         btnBack.setOnClickListener(v -> {
@@ -46,13 +45,10 @@ public class DashboardPemilikActivity extends AppCompatActivity {
             finish();
         });
 
-        // 3. MENU NAVIGASI
+        // 3. MENU NAVIGASI (Hanya 4 Menu Utama)
         cardKelola.setOnClickListener(v -> startActivity(new Intent(this, KelolaKamarActivity.class)));
         cardPenghuni.setOnClickListener(v -> startActivity(new Intent(this, DataPenghuniActivity.class)));
-        cardRingkasan.setOnClickListener(v -> startActivity(new Intent(this, RingkasanKostActivity.class)));
         cardKomplain.setOnClickListener(v -> startActivity(new Intent(this, KomplainMasukActivity.class)));
-
-        // Klik ke Halaman Pesanan
         cardPesanan.setOnClickListener(v -> startActivity(new Intent(this, PesananActivity.class)));
 
         // 4. TEST AMBIL DATA
@@ -64,7 +60,6 @@ public class DashboardPemilikActivity extends AppCompatActivity {
         String token = sharedPreferences.getString("token", null);
 
         if (token == null) {
-            Toast.makeText(this, "Sesi habis, silakan login ulang!", Toast.LENGTH_SHORT).show();
             startActivity(new Intent(this, LoginPemilikActivity.class));
             finish();
             return;
@@ -79,16 +74,14 @@ public class DashboardPemilikActivity extends AppCompatActivity {
                 if (response.isSuccessful() && response.body() != null) {
                     List<KamarResponse.KamarModel> daftarKamar = response.body().getData();
                     int totalKamar = (daftarKamar != null) ? daftarKamar.size() : 0;
-                    Toast.makeText(DashboardPemilikActivity.this, "Sukses terhubung! Ada " + totalKamar + " kamar.", Toast.LENGTH_LONG).show();
-                } else {
-                    Toast.makeText(DashboardPemilikActivity.this, "Gagal ambil data", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(DashboardPemilikActivity.this, "Terhubung! Ada " + totalKamar + " kamar.", Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(Call<KamarResponse> call, Throwable t) {
-                Toast.makeText(DashboardPemilikActivity.this, "Koneksi Error!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(DashboardPemilikActivity.this, "Koneksi ke Server Gagal!", Toast.LENGTH_SHORT).show();
             }
-        }); // Pastikan ada tanda ); di sini
+        });
     }
 }

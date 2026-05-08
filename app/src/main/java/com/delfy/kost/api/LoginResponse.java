@@ -21,10 +21,6 @@ public class LoginResponse {
         @SerializedName("access_token")
         private String access_token;
 
-        @SerializedName("token_type")
-        private String token_type;
-
-        // TAMBAHAN: Untuk menangkap data user (nama)
         @SerializedName("user")
         private UserData user;
 
@@ -32,23 +28,18 @@ public class LoginResponse {
         public UserData getUser() { return user; }
     }
 
-    // TAMBAHAN: Class untuk membaca isi data user
-    // Cari class UserData di bagian bawah file LoginResponse.java
     public static class UserData {
-        @SerializedName("nama")
+        @SerializedName("nama") // Harus sama dengan kolom 'nama' di tabel penyewa Navicat
         private String nama;
 
-        // TAMBAHKAN INI: Agar Java kenal id_penyewa dari Laravel
         @SerializedName("id_penyewa")
         private String id_penyewa;
 
-        public String getNama() {
-            return nama;
-        }
+        @SerializedName("email") // Tambahkan ini sekalian buat jaga-jaga
+        private String email;
 
-        // TAMBAHKAN GETTER INI: Supaya bisa dipanggil di Activity
-        public String getIdPenyewa() {
-            return id_penyewa;
-        }
+        public String getNama() { return nama; }
+        public String getIdPenyewa() { return id_penyewa; }
+        public String getEmail() { return email; }
     }
 }
