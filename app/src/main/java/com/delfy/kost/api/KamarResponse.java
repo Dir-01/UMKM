@@ -20,7 +20,7 @@ public class KamarResponse {
 
     public static class KamarModel {
         @SerializedName("id_kamar")
-        private int id_kamar;
+        private String id_kamar;
 
         @SerializedName("no_kamar")
         private String no_kamar;
@@ -41,7 +41,7 @@ public class KamarResponse {
         private String foto_kamar;
 
         // Getter untuk Adapter
-        public int getIdKamar() { return id_kamar; }
+        public String getIdKamar() { return id_kamar; }
         public String getNoKamar() { return no_kamar; }
         public int getHarga() { return harga; }
         public String getStatus() { return status; }

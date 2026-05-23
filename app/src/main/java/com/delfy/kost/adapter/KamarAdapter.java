@@ -40,7 +40,12 @@ public class KamarAdapter extends RecyclerView.Adapter<KamarAdapter.KamarViewHol
         KamarResponse.KamarModel kamar = listKamar.get(position);
 
         // 1. Tampilkan Data Teks
+        // 👇 INI TAMBAHAN BARU: Menampilkan "Kamar 01" di tulisan kecil atas
+        holder.tvNoKamar.setText(kamar.getNoKamar());
+
+        // Tetap menampilkan "Kamar Tipe 1" di tulisan tebal bawah
         holder.tvTipeKamar.setText(kamar.getTipeKamar());
+
         holder.tvStatusKamar.setText(kamar.getStatus());
 
         NumberFormat formatRupiah = NumberFormat.getCurrencyInstance(new Locale("in", "ID"));
@@ -55,11 +60,10 @@ public class KamarAdapter extends RecyclerView.Adapter<KamarAdapter.KamarViewHol
             holder.tvStatusKamar.setBackgroundResource(R.drawable.bg_badge_yellow);
         }
 
-        // 3. LOGIKA LOAD GAMBAR (Ini yang tadi hilang)
+        // 3. LOGIKA LOAD GAMBAR
         String urlGambar = "http://10.0.2.2:8000/storage/kamar/" + kamar.getFotoKamar();
         // Ganti IP-nya agar foto kamar tidak blank
         //String urlGambar = "http://192.168.1.15:8000/storage/kamar/" + kamar.getFotoKamar();
-
 
         Glide.with(holder.itemView.getContext())
                 .load(urlGambar)
@@ -85,15 +89,19 @@ public class KamarAdapter extends RecyclerView.Adapter<KamarAdapter.KamarViewHol
     }
 
     public class KamarViewHolder extends RecyclerView.ViewHolder {
-        TextView tvTipeKamar, tvStatusKamar, tvHargaKamar;
-        ImageView imgKamar; // Tambahkan variabel ImageView
+        // 👇 INI TAMBAHAN BARU: Menambahkan tvNoKamar ke daftar
+        TextView tvTipeKamar, tvStatusKamar, tvHargaKamar, tvNoKamar;
+        ImageView imgKamar;
 
         public KamarViewHolder(@NonNull View itemView) {
             super(itemView);
+            // 👇 INI TAMBAHAN BARU: Menghubungkan variabel dengan ID di file XML
+            tvNoKamar = itemView.findViewById(R.id.tvNoKamar);
+
             tvTipeKamar = itemView.findViewById(R.id.tvTipeKamar);
             tvStatusKamar = itemView.findViewById(R.id.tvStatusKamar);
             tvHargaKamar = itemView.findViewById(R.id.tvHargaKamar);
-            imgKamar = itemView.findViewById(R.id.img_kamar); // Hubungkan dengan ID di XML
+            imgKamar = itemView.findViewById(R.id.img_kamar);
         }
     }
 }

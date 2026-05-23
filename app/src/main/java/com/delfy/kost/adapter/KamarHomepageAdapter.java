@@ -89,7 +89,7 @@ public class KamarHomepageAdapter extends RecyclerView.Adapter<KamarHomepageAdap
             super(itemView);
             tvTipe = itemView.findViewById(R.id.tvTipeKamar);
             tvHarga = itemView.findViewById(R.id.tvHargaKamar);
-            tvLabel = itemView.findViewById(R.id.tv_label_nomor);
+            tvLabel = itemView.findViewById(R.id.tvNoKamar);
             tvStatus = itemView.findViewById(R.id.tvStatusKamar);
             imgKamar = itemView.findViewById(R.id.img_kamar);
         }

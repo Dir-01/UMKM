@@ -4,7 +4,7 @@ import com.google.gson.annotations.SerializedName;
 
 public class KamarModel {
     @SerializedName("id_kamar")
-    private int idKamar;
+    private String idKamar;
 
     @SerializedName("no_kamar")
     private String noKamar;
